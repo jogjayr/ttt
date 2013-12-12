@@ -15,10 +15,12 @@
 ;; move-square - squares are numbered from 0-8 as shown above
 ;; @return - the next move (if the move was played by the player)
 (defn compute-next-move [move-char move-square]
+	{:pre [(and (<= move-square 8) (>= move-square 0))]}
 	(let [current-state (last board-state)]
 		;; create a new state vector with the given move
 		(def newest-state (assoc current-state move-square move-char))
-
+		(if (some #(= newest-state %) board-state)
+			(throw (Exception. "Move has already been played")))
 		;; append the new state vector to the board-state
 		(def board-state (conj board-state newest-state))
 
