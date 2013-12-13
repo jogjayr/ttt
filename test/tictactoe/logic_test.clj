@@ -8,20 +8,15 @@
     (let [last-move (last board-state)]
       (is (= "x" (last-move 8))))))
 
-(deftest play-same-square
+(deftest move-validity
   (testing "Throws an Exception if a previously played square is played again"
-    (is (thrown? Exception (compute-next-move "x" 8) 0)))
+    (is (thrown? Exception (is-valid-move? "x" 8) 0)))
   (testing "Throws an Exception if two x-es in a row are played"
-    (is (thrown? Exception (compute-next-move "x" 6)))))
-
-(deftest move-square-limits
+    (is (thrown? Exception (is-valid-move? "x" 4))))
   (testing "Rejects a move square greater than 8"
-    (is (thrown? AssertionError (compute-next-move "x" 9))))
-  (testing "Accepts a move square less than 8 and greater than 0"
-    (compute-next-move "o" 5)
-    (is (= "o" ((last board-state) 5))))
+    (is (thrown? AssertionError (is-valid-move? "x" 9))))
   (testing "Rejects move square less than 0"
-    (is (thrown? AssertionError (compute-next-move "x" -1)))))
+    (is (thrown? AssertionError (is-valid-move? "x" -1)))))
 
 (deftest move-occurrence-counts
   (testing "Returns 0 if no occurrence of moves in the state"
