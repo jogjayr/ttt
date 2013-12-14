@@ -20,10 +20,8 @@
   [move-char move-square board]
   (if (or (> move-square 8) (< move-square 0))
     (throw  (AssertionError. "Invalid move square"))
-    (let [current-state (last board)
-
-          ;; create a new state vector with the given move
-          newest-state  (assoc current-state move-square move-char)
+    (let [;; create a new state vector with the given move
+          newest-state  (assoc board move-square move-char)
 
           ;; get the number of x-es in the newest state so we can test 
           x-es-in-new (move-count "x" newest-state)
@@ -32,7 +30,7 @@
           o-s-in-new (move-count "o" newest-state)]
     
     ;;check that a move isn't being played on an already-played square
-    (if (some #(= newest-state %) board)
+    (if (not= "" (board move-square))
       (throw (Exception. "Move has already been played"))
     
       ;;check that the number of x-es is exactly 1 greater than the number of o-s
@@ -49,7 +47,7 @@
 
   {:pre [(is-valid-move? move-char move-square board)] }
 
-    (let [newest-move (assoc (last board) move-square move-char)
+    (let [newest-move (assoc board move-square move-char)
 
           ;;find the blank squares on the board
           blank-squares (keep-indexed (fn [idx value] (if (= value "") idx nil )) newest-move)]
@@ -71,7 +69,6 @@
         (let [free-corner (some #{0 2 6 8} blank-squares)]
           (if free-corner
             (do 
-              (print free-corner " is a free corner")
               (assoc newest-move free-corner "o"))
           ;; 3. if no corner square is free, find the first of 1, 3, 5, 7 that hasn't been played
             (let [free-side (some #{1 3 5 7} blank-squares)]

@@ -3,7 +3,7 @@
       [tictactoe.logic :refer :all]))
 
 (deftest move-validity
-  (let [board ["" "" "" "" "" "" "" "" "x"]]
+  (let [board ["" "" "" "" "" "" "" "" "x"] ]
     (testing "Throws an Exception if a previously played square is played again"
       (is (thrown? Exception (is-valid-move? "x" 8 board) 0)))
     (testing "Throws an Exception if two x-es in a row are played"
@@ -21,10 +21,14 @@
 
 (deftest correct-move-played
   (testing "Plays center square if it isn't played"
-    (let [board [(vec (repeat 9 ""))]]
+    (let [board (vec (repeat 9 ""))]
       (is (= ["" "" "" "x" "o" "" "" "" ""] (compute-next-move "x" 3 board)))))
-  (testing "plays a corner square if center square is played")
-    (let [board [["" "" "" "x" "o" "" "" "" ""]]]
-      (is (= ["o" "x" "" "x" "o" "" "" "" ""] (compute-next-move "x" 1 board) ))
-      (is (= ["o" "x" "o" "x" "o" "" "" "x" ""] (compute-next-move "x" 7 [["o" "x" "" "x" "o" "" "" "" ""]])))))
-
+  (testing "plays a corner square if center square is played"
+    (let [board ["" "" "" "x" "o" "" "" "" ""]]
+      (is (= ["o" "x" "" "x" "o" "" "" "" ""] (compute-next-move "x" 1 board)))
+      (is (= ["o" "x" "o" "x" "o" "" "" "x" ""] (compute-next-move "x" 7 ["o" "x" "" "x" "o" "" "" "" ""])))
+      (is (= ["o" "x" "o" "x" "o" "x" "o" "x" ""] (compute-next-move "x" 5 ["o" "x" "o" "x" "o" "" "" "x" ""])))
+      (is (= ["o" "x" "o" "x" "o" "" "x" "x" "o"] (compute-next-move "x" 6 ["o" "x" "o" "x" "o" "" "" "x" ""])))))
+  (testing "plays a side square if center and corner squares are played"
+    (let [board ["o" "" "x" "" "x" "" "o" "" "" ]]
+      (is (= ["o" "o" "x" "" "x" "" "o" "" "x" ] (compute-next-move "x" 8 board))))))
