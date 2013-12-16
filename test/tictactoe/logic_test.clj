@@ -31,4 +31,16 @@
       (is (= ["o" "x" "o" "x" "o" "" "x" "x" "o"] (compute-next-move "x" 6 ["o" "x" "o" "x" "o" "" "" "x" ""])))))
   (testing "plays a side square if center and corner squares are played"
     (let [board ["o" "" "x" "" "x" "" "o" "" "" ]]
-      (is (= ["o" "o" "x" "" "x" "" "o" "" "x" ] (compute-next-move "x" 8 board))))))
+      (is (= ["o" "o" "x" "" "x" "" "o" "" "x" ] (compute-next-move "x" 8 board)))
+      (is (= ["o" "o" "x" "x" "x" "o" "o" "" "x" ] (compute-next-move "x" 3 ["o" "o" "x" "" "x" "" "o" "" "x" ]))))))
+
+(deftest win-condition-checker
+  (testing "Returns false if no one has won"
+    (let [board ["o" "" "" "" "x" "" "" "" "o"]]
+      (is (= false (is-over? board)))))
+  (testing "Returns x if x has won"
+    (let [board ["x" "x" "x" "o" "" "o" "" "" ""]]
+      (is (= "x" (is-over? board)))))
+  (testing "Returns o if o has won"
+    (let [board ["o" "o" "o" "x" "" "x" "" "" ""]]
+      (is (= "o" (is-over? board))))))
