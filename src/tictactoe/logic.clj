@@ -52,31 +52,23 @@
           ;;find the blank squares on the board
           blank-squares (keep-indexed (fn [idx value] (if (= value "") idx nil )) newest-move)]
 
-      (print blank-squares)
-
       ;; want to make a game engine that will always at least draw
       ;; so it will look to play the 4 square 1st, then 0, 2, 6, 8 (the corners)
       ;; with equal priority, then 1, 3, 5, 7 with also equal priority
 
       ;; 1. check if 4 is played
       (if (some #{4} blank-squares)
-        (do
-          (print "four isn't played")
-          (assoc newest-move 4 "o"))
+        (assoc newest-move 4 "o")
 
         ;; 2. if it has been played (by either player), find the first of 0, 2, 6, 8 that
         ;;    haven't been played, and do it
         (let [free-corner (some #{0 2 6 8} blank-squares)]
           (if free-corner
-            (do 
-              (assoc newest-move free-corner "o"))
+            (assoc newest-move free-corner "o")
           ;; 3. if no corner square is free, find the first of 1, 3, 5, 7 that hasn't been played
             (let [free-side (some #{1 3 5 7} blank-squares)]
               (if free-side
-                (do 
-                  (print free-side " is a free side")
-                  (assoc newest-move free-side "o"))
-                (print "none of them worked"))))))))
+                  (assoc newest-move free-side "o"))))))))
 
 (defn is-over? 
   "Check the board state and return name of winner, false otherwise"
