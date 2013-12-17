@@ -17,7 +17,7 @@
               (if (not= "" move)
                 (recur (inc idx) (.replace return-board (str idx) move))
                 (recur (inc idx) return-board)))
-              return-board))))) 
+              return-board)))))
 
 (defn draw-board [board]
   (print (fill-board board)))
