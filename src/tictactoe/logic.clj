@@ -46,7 +46,6 @@
 (defn compute-next-move [move-char move-square board]
 
   {:pre [(is-valid-move? move-char move-square board)] }
-
     (let [newest-move (assoc board move-square move-char)
 
           ;;find the blank squares on the board
@@ -73,8 +72,13 @@
 (defn is-over? 
   "Check the board state and return name of winner, false otherwise"
   [board]
-  (let [winners [[0 1 2] [3 4 5] [6 7 8] [0 3 6] [1 4 7] [2 5 8] [0 4 8] [2 4 6]]
+  (if (= [] board)
+    false
+    (let [winners [[0 1 2] [3 4 5] [6 7 8] [0 3 6] [1 4 7] [2 5 8] [0 4 8] [2 4 6]]
         winning-move (.indexOf (map #(apply = (map board %)) winners) true) ]
     (if (= winning-move -1)
       false
-      (board (first (winners winning-move))))))
+      (let [winning-player (board (first (winners winning-move)))]
+        (if (= "" winning-player)
+          false
+          winning-player))))))
