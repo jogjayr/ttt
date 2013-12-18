@@ -36,11 +36,18 @@
 
 (deftest win-condition-checker
   (testing "Returns false if no one has won"
-    (let [board ["o" "" "" "" "x" "" "" "" "o"]]
-      (is (= false (is-over? board)))))
+    (is (= false (is-over? ["o" "" "" "" "x" "" "" "" "o"])))
+    (is (= false (is-over? ["x" "" "" "" "" "" "" "" ""])))
+    (is (= false (is-over? ["" "" "o" "x" "" "" "" "" ""]))))
+
   (testing "Returns x if x has won"
-    (let [board ["x" "x" "x" "o" "" "o" "" "" ""]]
-      (is (= "x" (is-over? board)))))
+    ;;horizontal
+    (is (= "x" (is-over? ["x" "x" "x" "o" "" "o" "" "" ""])))
+    ;;diagonal
+    (is (= "x" (is-over? ["x" "" "" "o" "x" "o" "" "" "x"])))
+    ;;vertical
+    (is (= "x" (is-over? ["x" "o" "" "x" "o" "" "x" "" ""]))))
   (testing "Returns o if o has won"
-    (let [board ["o" "o" "o" "x" "" "x" "" "" ""]]
-      (is (= "o" (is-over? board))))))
+    (is (= "o" (is-over? ["o" "o" "o" "x" "" "x" "" "" ""])))
+    (is (= "o" (is-over? ["x" "" "o" "x" "o" "x" "o" "" ""])))
+    (is (= "o" (is-over? ["x" "" "o" "" "x" "o" "x" "" "o"])))))
