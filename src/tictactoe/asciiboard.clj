@@ -20,4 +20,4 @@
               return-board)))))
 
 (defn draw-board [board]
-  (print (fill-board board)))
+  (println (fill-board board)))
