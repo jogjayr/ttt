@@ -10,10 +10,10 @@
   (tictactoe.asciiboard/draw-board [])
   (println "Welcome to Clojure tictactoe! You are 'x', the computer is 'o'. You go first. Enter a move: ")
   (loop [board (vec(repeat 9 ""))]
-    (tictactoe.asciiboard/draw-board board)
-    (let [winner (tictactoe.logic/is-over? board)
-          next-input (tictactoe.input/get-input #(try (java.lang.Integer/parseInt %) (catch NumberFormatException e "Enter a number between 0 and 8")) #(< -1 % 8) "error")
-          next-move (tictactoe.logic/compute-next-move "x" next-input board)]
+    ; (tictactoe.asciiboard/draw-board board)
+    (let [next-input (tictactoe.input/get-input #(try (java.lang.Integer/parseInt %) (catch NumberFormatException e "Enter a number between 0 and 8")) #(< -1 % 8) "error")
+          next-move (tictactoe.logic/compute-next-move "x" next-input board)
+          winner (tictactoe.logic/is-over? next-move)]
       (tictactoe.asciiboard/draw-board next-move)
       (if (not winner)
         (do
