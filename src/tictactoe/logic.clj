@@ -75,9 +75,12 @@
   (if (= [] board)
     false
     (let [winners [[0 1 2] [3 4 5] [6 7 8] [0 3 6] [1 4 7] [2 5 8] [0 4 8] [2 4 6]]
-        winning-move (.indexOf (map #(apply = (map board %)) winners) true) ]
+          win-results (map #(apply = (map board %)) winners)
+          winning-move (.indexOf win-results true)]
     (if (= winning-move -1)
-      false
+      (if (= (.indexOf board "") -1)
+        ""
+        false)
       (let [winning-player (board (first (winners winning-move)))]
         (if (= "" winning-player)
           false

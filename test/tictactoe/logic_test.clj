@@ -50,4 +50,6 @@
   (testing "Returns o if o has won"
     (is (= "o" (is-over? ["o" "o" "o" "x" "" "x" "" "" ""])))
     (is (= "o" (is-over? ["x" "" "o" "x" "o" "x" "o" "" ""])))
-    (is (= "o" (is-over? ["x" "" "o" "" "x" "o" "x" "" "o"])))))
+    (is (= "o" (is-over? ["x" "" "o" "" "x" "o" "x" "" "o"]))))
+  (testing "Returns empty string \"\" if game is drawn"
+    (is (= "" (is-over? ["o" "x" "o" "x" "x" "o" "o" "o" "x"])))))
